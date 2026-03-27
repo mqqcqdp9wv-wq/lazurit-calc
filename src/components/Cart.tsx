@@ -1,6 +1,6 @@
 'use client'
 
-import { ZONES, DISCOUNT, formatPrice } from '@/data/services'
+import { ZONES, COMPLEXES, DISCOUNT, formatPrice } from '@/data/services'
 
 type CartProps = {
   selected: Record<string, Set<number>>
@@ -24,11 +24,49 @@ export default function Cart({
   const activeZones = Object.entries(selected).filter(([, ids]) => ids.size > 0)
   if (activeZones.length === 0) return null
 
-  // Calculate prices
+  // Collect all selected item IDs
+  const allSelectedIds = new Set<number>()
+  activeZones.forEach(([, ids]) => ids.forEach(id => allSelectedIds.add(id)))
+
+  // Find best matching complexes (greedy: pick most valuable first)
+  const usedInComplex = new Set<number>()
+  const appliedComplexes: { title: string; price: number; itemIds: number[] }[] = []
+
+  // Sort complexes by saving (biggest saving first)
+  const sortedComplexes = [...COMPLEXES]
+    .map(c => {
+      const separatePrice = c.requiredItemIds.reduce((sum, id) => {
+        for (const zone of Object.values(ZONES)) {
+          const item = zone.items.find(i => i.id === id)
+          if (item) return sum + item.price
+        }
+        return sum
+      }, 0)
+      return { ...c, saving: separatePrice - c.price }
+    })
+    .sort((a, b) => b.saving - a.saving)
+
+  for (const complex of sortedComplexes) {
+    const allPresent = complex.requiredItemIds.every(id => allSelectedIds.has(id))
+    const noneUsed = complex.requiredItemIds.every(id => !usedInComplex.has(id))
+    if (allPresent && noneUsed) {
+      complex.requiredItemIds.forEach(id => usedInComplex.add(id))
+      appliedComplexes.push({
+        title: complex.title,
+        price: complex.price,
+        itemIds: complex.requiredItemIds,
+      })
+    }
+  }
+
+  // Calculate price: complex prices + individual prices for non-complex items
   let basePerSession = 0
+  appliedComplexes.forEach(c => {
+    basePerSession += Math.round(c.price * priceMultiplier)
+  })
   activeZones.forEach(([zone, ids]) => {
     ZONES[zone].items
-      .filter((i) => ids.has(i.id))
+      .filter((i) => ids.has(i.id) && !usedInComplex.has(i.id))
       .forEach((item) => {
         basePerSession += Math.round(item.price * priceMultiplier)
       })
@@ -57,16 +95,46 @@ export default function Cart({
         </button>
       </div>
 
-      {/* Cart items grouped by zone */}
-      <div>
-        {activeZones.map(([zone, ids]) => (
+      {/* Applied complexes */}
+      {appliedComplexes.length > 0 && (
+        <div className="px-5 py-3 border-b border-gray-100">
+          <div className="text-[0.72rem] font-bold uppercase tracking-wider text-emerald-500 mb-2">
+            Комплексы
+          </div>
+          {appliedComplexes.map((c, idx) => (
+            <div key={idx} className="py-1.5">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-800">{c.title}</span>
+                <span className="text-sm font-semibold text-emerald-600">
+                  {formatPrice(Math.round(c.price * priceMultiplier))}
+                </span>
+              </div>
+              <div className="text-[11px] text-gray-400 mt-0.5">
+                {c.itemIds.map(id => {
+                  for (const zone of Object.values(ZONES)) {
+                    const item = zone.items.find(i => i.id === id)
+                    if (item) return item.title
+                  }
+                  return ''
+                }).join(' + ')}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Individual items (not in complexes) */}
+      {activeZones.map(([zone, ids]) => {
+        const individualItems = ZONES[zone].items.filter(
+          (i) => ids.has(i.id) && !usedInComplex.has(i.id)
+        )
+        if (individualItems.length === 0) return null
+        return (
           <div key={zone} className="px-5 py-3 border-b border-gray-100 last:border-b-0">
             <div className="text-[0.72rem] font-bold uppercase tracking-wider text-gray-400 mb-2">
               {ZONES[zone].title}
             </div>
-            {ZONES[zone].items
-              .filter((i) => ids.has(i.id))
-              .map((item) => (
+            {individualItems.map((item) => (
                 <div key={item.id} className="flex justify-between items-center py-1.5">
                   <span className="text-sm font-medium text-gray-800">{item.title}</span>
                   <span className="flex items-center gap-2.5">
@@ -86,8 +154,8 @@ export default function Cart({
                 </div>
               ))}
           </div>
-        ))}
-      </div>
+        )
+      })}
 
       {/* Discount quest block */}
       <div className={`
