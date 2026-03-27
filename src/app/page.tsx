@@ -72,8 +72,13 @@ export default function Calculator() {
   const hasAnySelected = Object.values(selected).some((s) => s.size > 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50/30 to-violet-50/20">
-      <div className="max-w-[1400px] mx-auto px-5 py-6 pb-10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-cyan-50 to-violet-50 relative overflow-hidden">
+      {/* Decorative blobs */}
+      <div className="fixed top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-cyan-200/30 blur-3xl pointer-events-none" />
+      <div className="fixed bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-violet-200/30 blur-3xl pointer-events-none" />
+      <div className="fixed top-[40%] left-[30%] w-[300px] h-[300px] rounded-full bg-rose-100/20 blur-3xl pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto px-5 py-6 pb-10 relative z-10">
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-br from-gray-800 to-cyan-600 bg-clip-text text-transparent">
