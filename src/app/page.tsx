@@ -72,13 +72,8 @@ export default function Calculator() {
   const hasAnySelected = Object.values(selected).some((s) => s.size > 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-cyan-50 to-violet-50 relative overflow-hidden">
-      {/* Decorative blobs */}
-      <div className="fixed top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-cyan-200/30 blur-3xl pointer-events-none" />
-      <div className="fixed bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-violet-200/30 blur-3xl pointer-events-none" />
-      <div className="fixed top-[40%] left-[30%] w-[300px] h-[300px] rounded-full bg-rose-100/20 blur-3xl pointer-events-none" />
-
-      <div className="max-w-[1400px] mx-auto px-5 py-6 pb-10 relative z-10">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-[1400px] mx-auto px-5 py-6 pb-10">
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-br from-gray-800 to-cyan-600 bg-clip-text text-transparent">
@@ -104,7 +99,7 @@ export default function Calculator() {
           <div className="flex flex-col gap-5">
             {/* Empty state */}
             {!activeZone && !hasAnySelected && (
-              <div className="glass rounded-2xl shadow-lg p-12 text-center">
+              <div className="bg-white rounded-2xl shadow-md p-12 text-center">
                 <div className="w-14 h-14 bg-cyan-50 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-600">
                     <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122M5.828 12.172l-2.122 2.122" />

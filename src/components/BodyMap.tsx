@@ -34,7 +34,7 @@ type BodyMapProps = {
 export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClick, onGenderChange }: BodyMapProps) {
 
   return (
-    <div className="glass-strong rounded-2xl shadow-lg relative overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-md relative overflow-hidden">
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-600 to-cyan-500 z-20" />
 

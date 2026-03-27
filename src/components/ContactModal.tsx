@@ -58,7 +58,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     >
       <div
         className={`
-          glass-strong rounded-2xl shadow-2xl w-full max-w-[400px] p-7 relative
+          bg-white rounded-2xl shadow-2xl w-full max-w-[400px] p-7 relative
           transition-all duration-300
           ${isOpen ? 'translate-y-0 scale-100' : 'translate-y-5 scale-[0.97]'}
         `}

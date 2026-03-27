@@ -11,7 +11,7 @@ type ServiceListProps = {
 
 export default function ServiceList({ zone, selectedIds, priceMultiplier, onToggle }: ServiceListProps) {
   return (
-    <div className="glass rounded-2xl shadow-lg overflow-hidden animate-in">
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden animate-in">
       <div className="px-5 pt-4 pb-3 border-b border-gray-100">
         <h3 className="text-base font-bold text-gray-800">{zone.title}</h3>
         <p className="text-xs text-gray-400 mt-0.5">Выберите нужные услуги</p>

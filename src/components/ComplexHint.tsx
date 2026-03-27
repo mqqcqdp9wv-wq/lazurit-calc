@@ -98,8 +98,8 @@ export default function ComplexHint({ selected, priceMultiplier, sessions }: Com
             className={`
               rounded-xl border-2 p-4 transition-all duration-500
               ${quest.isComplete
-                ? 'border-emerald-400 bg-emerald-50/80 shadow-md shadow-emerald-100 backdrop-blur-sm'
-                : 'glass border-white/40'
+                ? 'border-emerald-400 bg-emerald-50 shadow-md shadow-emerald-100'
+                : 'border-gray-200 bg-white'
               }
             `}
           >

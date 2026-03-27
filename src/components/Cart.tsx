@@ -83,7 +83,7 @@ export default function Cart({
   const needSessions = Math.max(0, DISCOUNT.minSessions - sessions)
 
   return (
-    <div className="glass rounded-2xl shadow-lg overflow-hidden animate-in">
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden animate-in">
       {/* Header */}
       <div className="px-5 pt-4 pb-3 border-b border-gray-100 flex justify-between items-center">
         <h3 className="text-base font-bold text-gray-800">Ваш выбор</h3>
