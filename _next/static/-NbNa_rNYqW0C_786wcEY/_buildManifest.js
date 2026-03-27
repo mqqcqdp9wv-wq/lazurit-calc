@@ -1,7 +1,12 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/lazurit-calc//_next/:path+",
+        "destination": "/lazurit-calc/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [
