@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 type ZoneCallout = {
   zone: string
   label: string
@@ -42,7 +44,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
           {/* Image */}
           <div className="relative">
             <Image
-              src={gender === 'male' ? '/male.png' : '/female.png'}
+              src={gender === 'male' ? `${BASE}/male.png` : `${BASE}/female.png`}
               alt="Зоны тела"
               width={1536}
               height={2752}
