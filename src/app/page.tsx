@@ -72,7 +72,7 @@ export default function Calculator() {
   const hasAnySelected = Object.values(selected).some((s) => s.size > 0)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50/30 to-violet-50/20">
       <div className="max-w-[1400px] mx-auto px-5 py-6 pb-10">
         {/* Header */}
         <header className="text-center mb-8">
@@ -99,7 +99,7 @@ export default function Calculator() {
           <div className="flex flex-col gap-5">
             {/* Empty state */}
             {!activeZone && !hasAnySelected && (
-              <div className="bg-white rounded-2xl shadow-md p-12 text-center">
+              <div className="glass rounded-2xl shadow-lg p-12 text-center">
                 <div className="w-14 h-14 bg-cyan-50 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-600">
                     <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122M5.828 12.172l-2.122 2.122" />
