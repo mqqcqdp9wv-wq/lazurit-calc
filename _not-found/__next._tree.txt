@@ -1,2 +1,2 @@
-:HL["/lazurit-calc/_next/static/chunks/0-nf4jig3ppxq.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"08DaiPow-ROv68yHCZXdx"}
+:HL["/lazurit-calc/_next/static/chunks/02-vqhksk7-jx.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"7b_EFI4YlScGEuh99zZ0Z"}
