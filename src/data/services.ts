@@ -2,6 +2,10 @@ export type ServiceItem = {
   id: number
   title: string
   price: number
+  group?: string
+  hint?: string
+  /** 'male' = показывать только мужчинам, 'female' = только женщинам, undefined = всем */
+  genderOnly?: 'male' | 'female'
 }
 
 export type Zone = {
@@ -29,26 +33,27 @@ export const ZONES: Record<string, Zone> = {
       { id: 1, title: 'Верхняя губа', price: 1265 },
       { id: 2, title: 'Подбородок', price: 1265 },
       { id: 3, title: 'Бакенбарды', price: 1265 },
-      { id: 4, title: 'Лицо полностью', price: 3200 },
+      { id: 26, title: 'Межбровное пространство', price: 1265 },
+      { id: 4, title: 'Лицо полностью', price: 3200, hint: 'Выгодно от 3 зон' },
     ],
   },
   body: {
     key: 'body',
     title: 'Тело',
     items: [
-      { id: 5, title: 'Подмышки', price: 1495 },
-      { id: 6, title: 'Ареолы', price: 1265 },
-      { id: 7, title: 'Межгрудное пространство', price: 1495 },
-      { id: 8, title: 'Грудная клетка полностью', price: 2250 },
-      { id: 9, title: 'Линия живота', price: 1265 },
-      { id: 10, title: 'Живот полностью', price: 2250 },
-      { id: 11, title: 'Поясница', price: 2550 },
-      { id: 12, title: 'Лопатки', price: 2550 },
-      { id: 13, title: 'Спина полностью', price: 3800 },
-      { id: 14, title: 'Классическое бикини', price: 2550 },
-      { id: 15, title: 'Тотальное бикини', price: 4350 },
-      { id: 16, title: 'Межъягодичная зона', price: 1495 },
-      { id: 17, title: 'Ягодицы', price: 3795 },
+      { id: 5, title: 'Подмышки', price: 1495, group: 'Торс' },
+      { id: 6, title: 'Ареолы', price: 1265, group: 'Торс' },
+      { id: 7, title: 'Межгрудное пространство', price: 1495, group: 'Торс', genderOnly: 'male' },
+      { id: 8, title: 'Грудная клетка полностью', price: 2250, group: 'Торс', genderOnly: 'male' },
+      { id: 9, title: 'Линия живота', price: 1265, group: 'Торс' },
+      { id: 10, title: 'Живот полностью', price: 2250, group: 'Торс' },
+      { id: 11, title: 'Поясница', price: 2550, group: 'Спина' },
+      { id: 12, title: 'Лопатки', price: 2550, group: 'Спина' },
+      { id: 13, title: 'Спина полностью', price: 3800, group: 'Спина' },
+      { id: 14, title: 'Классическое бикини', price: 2550, group: 'Интимные зоны', hint: 'По линии белья' },
+      { id: 15, title: 'Тотальное бикини', price: 4350, group: 'Интимные зоны', hint: 'Включая межъягодичную зону' },
+      { id: 16, title: 'Межъягодичная зона', price: 1495, group: 'Интимные зоны' },
+      { id: 17, title: 'Ягодицы', price: 3795, group: 'Интимные зоны' },
     ],
   },
   hands: {
@@ -58,7 +63,7 @@ export const ZONES: Record<string, Zone> = {
       { id: 18, title: 'Пальцы рук', price: 1265 },
       { id: 19, title: 'Предплечье', price: 3250 },
       { id: 20, title: 'Плечо', price: 3200 },
-      { id: 21, title: 'Руки полностью', price: 4300 },
+      { id: 21, title: 'Руки полностью', price: 4300, hint: 'Предплечье + плечо' },
     ],
   },
   legs: {
@@ -67,7 +72,7 @@ export const ZONES: Record<string, Zone> = {
     items: [
       { id: 22, title: 'Голени', price: 3795 },
       { id: 23, title: 'Бёдра', price: 4025 },
-      { id: 24, title: 'Ноги полностью', price: 6325 },
+      { id: 24, title: 'Ноги полностью', price: 6325, hint: 'Голени + бёдра' },
       { id: 25, title: 'Пальцы ног', price: 1265 },
     ],
   },
@@ -125,6 +130,30 @@ export const COMPLEXES: ComplexOffer[] = [
     price5: 37375,
   },
 ]
+
+// ID позиций, входящих хотя бы в один комплекс
+export const COMPLEX_ITEM_IDS: Set<number> = new Set(
+  COMPLEXES.flatMap(c => c.requiredItemIds)
+)
+
+// Маппинг "полная зона" → подзоны, которые в неё входят
+export const PARENT_CHILD_MAP: Record<number, number[]> = {
+  4: [1, 2, 3, 26],    // Лицо полностью → Верхняя губа, Подбородок, Бакенбарды, Межбровное
+  10: [9],              // Живот полностью → Линия живота
+  13: [11, 12],         // Спина полностью → Поясница, Лопатки
+  15: [14, 16],         // Тотальное бикини → Классическое бикини, Межъягодичная зона
+  21: [19, 20],         // Руки полностью → Предплечье, Плечо
+  24: [22, 23],         // Ноги полностью → Голени, Бёдра
+}
+
+// Обратный маппинг: подзона → родительские "полные" зоны
+export const CHILD_PARENT_MAP: Record<number, number[]> = {}
+for (const [parentId, childIds] of Object.entries(PARENT_CHILD_MAP)) {
+  for (const childId of childIds) {
+    if (!CHILD_PARENT_MAP[childId]) CHILD_PARENT_MAP[childId] = []
+    CHILD_PARENT_MAP[childId].push(Number(parentId))
+  }
+}
 
 // Маппинг зон на теле (правые точки — алиасы)
 export const ZONE_ALIAS: Record<string, string> = {

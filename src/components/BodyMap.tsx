@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { FEMALE_ZONES, MALE_ZONES } from '@/data/bodyZones'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
@@ -34,9 +35,9 @@ type BodyMapProps = {
 export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClick, onGenderChange }: BodyMapProps) {
 
   return (
-    <div className="bg-white rounded-2xl shadow-md relative overflow-hidden">
+    <div className="card-premium relative overflow-hidden">
       {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-600 to-cyan-500 z-20" />
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-500 via-emerald-400 to-cyan-500 z-20 shadow-[0_1px_8px_rgba(6,182,212,0.3)]" />
 
       <div className="relative pt-4 pb-2">
         {/* Grid: image | labels */}
@@ -53,41 +54,61 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
               priority
             />
 
-            {/* SVG overlay for dots and lines */}
-            {(
-            <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none">
+            {/* SVG overlay — clickable body zones + dots + lines */}
+            <svg
+              viewBox="0 0 1536 2752"
+              preserveAspectRatio="xMidYMid meet"
+              className="absolute inset-0 w-full h-full z-10"
+            >
+              {/* Clickable body zone polygons */}
+              {(gender === 'female' ? FEMALE_ZONES : MALE_ZONES).map(z =>
+                z.paths.map((d, i) => (
+                  <path
+                    key={`zone-${z.zone}-${i}`}
+                    d={d}
+                    fill={activeZone === z.zone ? 'rgba(8,145,178,0.05)' : 'transparent'}
+                    stroke="none"
+                    className="cursor-pointer transition-all duration-200"
+                    style={{ pointerEvents: 'all' }}
+                    onMouseEnter={(e) => { if (activeZone !== z.zone) e.currentTarget.setAttribute('fill', 'rgba(8,145,178,0.04)') }}
+                    onMouseLeave={(e) => { if (activeZone !== z.zone) e.currentTarget.setAttribute('fill', 'transparent') }}
+                    onClick={() => onZoneClick(z.zone)}
+                  />
+                ))
+              )}
+
+              {/* Dots and lines */}
               {ZONE_CALLOUTS.map(callout => {
                 const isActive = activeZone === callout.zone
-                const dotX = parseFloat(callout.dotLeft)
-                const dotY = parseFloat(callout.dotTop)
+                // Convert percentage to viewBox coordinates
+                const dotX = parseFloat(callout.dotLeft) / 100 * 1536
+                const dotY = parseFloat(callout.dotTop) / 100 * 2752
 
                 return (
                   <g key={callout.zone}>
-                    {/* Line from dot to right edge */}
                     <line
-                      x1={`${dotX}%`}
-                      y1={`${dotY}%`}
-                      x2="100%"
-                      y2={`${dotY}%`}
+                      x1={dotX}
+                      y1={dotY}
+                      x2={1536}
+                      y2={dotY}
                       stroke={isActive ? '#0891B2' : '#CBD5E1'}
-                      strokeWidth={isActive ? 1.5 : 1}
-                      strokeDasharray={isActive ? 'none' : '4 3'}
-                      className="transition-all duration-300"
+                      strokeWidth={isActive ? 3 : 2}
+                      strokeDasharray={isActive ? 'none' : '8 6'}
+                      className="transition-all duration-300 pointer-events-none"
                     />
-                    {/* Dot on body */}
                     <circle
-                      cx={`${dotX}%`}
-                      cy={`${dotY}%`}
-                      r="3.5"
+                      cx={dotX}
+                      cy={dotY}
+                      r={isActive ? 12 : 10}
                       fill={isActive ? '#0891B2' : '#06B6D4'}
-                      opacity={isActive ? 1 : 0.5}
-                      className="transition-all duration-300"
+                      opacity={isActive ? 1 : 0.6}
+                      className="transition-all duration-300 cursor-pointer"
+                      onClick={() => onZoneClick(callout.zone)}
                     />
                   </g>
                 )
               })}
             </svg>
-            )}
           </div>
 
           {/* Right labels column — all in one vertical line */}
@@ -104,7 +125,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                   className={`
                     absolute left-0 flex items-center gap-1
                     px-2.5 py-1.5 rounded-lg
-                    text-[12px] font-semibold whitespace-nowrap
+                    text-[12px] font-semibold whitespace-nowrap font-[family-name:var(--font-display)]
                     transition-all duration-300 cursor-pointer
                     ${isActive
                       ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/20'
@@ -117,7 +138,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                 >
                   {callout.label}
                   {count > 0 && (
-                    <span className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center ${isActive ? 'bg-white text-cyan-600' : 'bg-cyan-600 text-white'}`}>
+                    <span key={count} className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center animate-badge-pop ${isActive ? 'bg-white text-cyan-600' : 'bg-cyan-600 text-white'}`}>
                       {count}
                     </span>
                   )}
@@ -129,10 +150,10 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
       </div>
 
       {/* Gender toggle */}
-      <div className="flex items-center justify-center gap-3 py-3 border-t border-gray-100">
+      <div className="flex items-center justify-center gap-2 py-3 border-t border-gray-100">
         <span
           onClick={() => onGenderChange('female')}
-          className={`text-xs font-medium cursor-pointer transition-colors ${
+          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap font-[family-name:var(--font-display)] ${
             gender === 'female' ? 'text-cyan-600 font-bold' : 'text-gray-500'
           }`}
         >
@@ -140,17 +161,17 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
         </span>
         <div
           onClick={() => onGenderChange(gender === 'female' ? 'male' : 'female')}
-          className="w-11 h-6 bg-cyan-600 rounded-full relative cursor-pointer flex-shrink-0"
+          className="w-11 h-6 bg-gradient-to-r from-cyan-500 to-cyan-600 shadow-inner rounded-full relative cursor-pointer flex-shrink-0"
         >
           <div
-            className={`w-5 h-5 bg-white rounded-full absolute top-0.5 shadow transition-all duration-300 ${
+            className={`w-5 h-5 bg-white rounded-full absolute top-0.5 shadow transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
               gender === 'male' ? 'left-[22px]' : 'left-0.5'
             }`}
           />
         </div>
         <span
           onClick={() => onGenderChange('male')}
-          className={`text-xs font-medium cursor-pointer transition-colors ${
+          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap font-[family-name:var(--font-display)] ${
             gender === 'male' ? 'text-cyan-600 font-bold' : 'text-gray-500'
           }`}
         >

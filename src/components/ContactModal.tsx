@@ -2,9 +2,13 @@
 
 import { useState } from 'react'
 
+type OrderLine = { title: string; price: string }
+
 type ContactModalProps = {
   isOpen: boolean
   onClose: () => void
+  orderLines?: OrderLine[]
+  totalPrice?: string
 }
 
 function phoneMask(value: string): string {
@@ -18,7 +22,7 @@ function phoneMask(value: string): string {
   return result
 }
 
-export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
+export default function ContactModal({ isOpen, onClose, orderLines, totalPrice }: ContactModalProps) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [telegram, setTelegram] = useState('')
@@ -48,7 +52,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     <div
       className={`
         fixed inset-0 z-50 flex items-center justify-center p-5
-        bg-gray-900/50 backdrop-blur-sm
+        bg-gray-950/40 backdrop-blur-md
         transition-all duration-300
         ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
       `}
@@ -58,9 +62,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     >
       <div
         className={`
-          bg-white rounded-2xl shadow-2xl w-full max-w-[400px] p-7 relative
+          bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/60 w-full max-w-[400px] p-7 relative
           transition-all duration-300
-          ${isOpen ? 'translate-y-0 scale-100' : 'translate-y-5 scale-[0.97]'}
+          ${isOpen ? 'translate-y-0 scale-100' : 'translate-y-5 scale-[0.95]'}
         `}
       >
         {/* Close button */}
@@ -76,7 +80,27 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
         {!submitted ? (
           <>
-            <h3 className="text-lg font-bold text-center mb-5">Контактные данные</h3>
+            <h3 className="text-lg font-bold text-center mb-4 font-[family-name:var(--font-display)]">Контактные данные</h3>
+
+            {/* Order summary */}
+            {orderLines && orderLines.length > 0 && (
+              <div className="mb-4 bg-gray-50 rounded-lg p-3 max-h-[140px] overflow-y-auto">
+                <ul className="space-y-1">
+                  {orderLines.map((line, i) => (
+                    <li key={i} className="flex justify-between text-xs text-gray-600">
+                      <span className="truncate mr-2">{line.title}</span>
+                      <span className="text-gray-800 font-medium whitespace-nowrap">{line.price}</span>
+                    </li>
+                  ))}
+                </ul>
+                {totalPrice && (
+                  <div className="flex justify-between mt-2 pt-2 border-t border-gray-200 text-sm font-bold text-gray-800">
+                    <span>Итого</span>
+                    <span className="text-cyan-600">{totalPrice}</span>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="space-y-3.5">
               <input
@@ -84,22 +108,24 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 placeholder="Фамилия Имя Отчество"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:shadow-[0_0_0_4px_rgba(6,182,212,0.08)] transition-all"
               />
               <input
                 type="tel"
                 placeholder="8 900 000 00 00"
                 value={phone}
                 onChange={(e) => setPhone(phoneMask(e.target.value))}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:shadow-[0_0_0_4px_rgba(6,182,212,0.08)] transition-all"
               />
-              <input
-                type="tel"
-                placeholder="Telegram (номер телефона)"
-                value={telegram}
-                onChange={(e) => setTelegram(phoneMask(e.target.value))}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
-              />
+              <div className="relative">
+                <input
+                  type="tel"
+                  placeholder="Telegram (необязательно)"
+                  value={telegram}
+                  onChange={(e) => setTelegram(phoneMask(e.target.value))}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm bg-gray-50 outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:shadow-[0_0_0_4px_rgba(6,182,212,0.08)] transition-all"
+                />
+              </div>
 
               {/* Consent checkbox */}
               <label className="flex items-start gap-2.5 cursor-pointer">
@@ -128,20 +154,28 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             <button
               onClick={handleSubmit}
               disabled={!canSubmit}
-              className="w-full mt-5 py-3.5 rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-500 text-white font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-cyan-500/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none"
+              className="w-full mt-5 py-3.5 rounded-lg bg-gradient-to-r from-cyan-600 via-cyan-500 to-emerald-400 text-white font-bold hover:-translate-y-0.5 hover:shadow-lg hover:shadow-cyan-500/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none relative overflow-hidden group"
             >
-              Отправить заявку
+              <span className="relative z-10">Отправить заявку</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
             </button>
           </>
         ) : (
           <div className="text-center py-5">
-            <svg width="48" height="48" fill="none" stroke="#10B981" strokeWidth="2" className="mx-auto mb-3">
-              <circle cx="24" cy="24" r="20" />
-              <polyline points="14,24 22,32 34,18" />
+            <svg width="48" height="48" fill="none" className="mx-auto mb-3">
+              <circle cx="24" cy="24" r="20" stroke="#10B981" strokeWidth="2" className="animate-circle-draw" />
+              <polyline points="14,24 22,32 34,18" stroke="#10B981" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-draw-check" />
             </svg>
-            <p className="text-sm text-gray-500">
-              Заявка отправлена!<br />Мы скоро свяжемся с вами.
+            <h4 className="text-base font-bold text-gray-800 mb-1">Заявка отправлена!</h4>
+            <p className="text-sm text-gray-500 mb-4">
+              Мы перезвоним в течение 15 минут<br />в рабочее время (9:00–20:00)
             </p>
+            <button
+              onClick={handleClose}
+              className="px-6 py-2.5 rounded-lg bg-gray-100 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-colors"
+            >
+              Закрыть
+            </button>
           </div>
         )}
       </div>
