@@ -240,6 +240,16 @@ export default function Calculator() {
 
   const hasAnySelected = Object.values(selected).some((s) => s.size > 0)
 
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    function onScroll() {
+      setShowScrollTop(window.scrollY > 400 && window.innerWidth < 1024)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   useEffect(() => {
     const els = document.querySelectorAll('.scroll-reveal')
     const observer = new IntersectionObserver(
@@ -476,6 +486,19 @@ export default function Calculator() {
             <p className="text-sm text-gray-600">Создаём платёж...</p>
           </div>
         </div>
+      )}
+
+      {/* Scroll to top — mobile */}
+      {showScrollTop && (activeZone || hasAnySelected) && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="lg:hidden fixed bottom-5 right-5 z-40 w-11 h-11 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:text-cyan-600 hover:border-cyan-300 active:scale-95 transition-all"
+          aria-label="Наверх к выбору зон"
+        >
+          <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 14V4m0 0L4 9m5-5l5 5" />
+          </svg>
+        </button>
       )}
     </div>
   )
