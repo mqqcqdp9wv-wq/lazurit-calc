@@ -280,16 +280,14 @@ export default function Calculator() {
         {/* Приветственное окно — на мобильном перед фигурой */}
         {!activeZone && !hasAnySelected && (
           <div className="lg:hidden card p-5 mb-5">
-            <div className="flex items-start gap-3 mb-4">
-              <div className="w-10 h-10 bg-cyan-50 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="flex flex-col items-center text-center mb-4">
+              <div className="w-10 h-10 bg-cyan-50 rounded-full flex items-center justify-center mb-2">
                 <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-600">
                   <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5" />
                 </svg>
               </div>
-              <div>
-                <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
-                <p className="text-sm text-gray-400">Нажмите на любую часть тела</p>
-              </div>
+              <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
+              <p className="text-sm text-gray-400">Нажмите на любую часть тела</p>
             </div>
             <div className="grid grid-cols-3 gap-2">
               <div className="text-center p-2.5 rounded-xl bg-gray-50">
