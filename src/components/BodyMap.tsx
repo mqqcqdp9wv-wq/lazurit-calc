@@ -63,12 +63,10 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                   <path
                     key={`zone-${z.zone}-${i}`}
                     d={d}
-                    fill={activeZone === z.zone ? 'rgba(8,145,178,0.05)' : 'transparent'}
+                    fill="transparent"
                     stroke="none"
-                    className="cursor-pointer transition-all duration-200"
+                    className="cursor-pointer"
                     style={{ pointerEvents: 'all' }}
-                    onMouseEnter={(e) => { if (activeZone !== z.zone) e.currentTarget.setAttribute('fill', 'rgba(8,145,178,0.04)') }}
-                    onMouseLeave={(e) => { if (activeZone !== z.zone) e.currentTarget.setAttribute('fill', 'transparent') }}
                     onClick={() => onZoneClick(z.zone)}
                   />
                 ))
