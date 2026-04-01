@@ -35,10 +35,7 @@ type BodyMapProps = {
 export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClick, onGenderChange }: BodyMapProps) {
 
   return (
-    <div className="card-premium relative overflow-hidden">
-      {/* Top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-500 via-emerald-400 to-cyan-500 z-20 shadow-[0_1px_8px_rgba(6,182,212,0.3)]" />
-
+    <div className="card overflow-hidden">
       <div className="relative pt-4 pb-2">
         {/* Grid: image | labels */}
         <div className="relative grid grid-cols-[1fr_70px] items-start">
@@ -47,8 +44,8 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
             <Image
               src={gender === 'male' ? `${BASE}/male.png` : `${BASE}/female.png`}
               alt="Зоны тела"
-              width={1536}
-              height={2752}
+              width={446}
+              height={800}
               className="w-full h-auto select-none"
               draggable={false}
               priority
@@ -125,7 +122,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                   className={`
                     absolute left-0 flex items-center gap-1
                     px-2.5 py-1.5 rounded-lg
-                    text-[12px] font-semibold whitespace-nowrap font-[family-name:var(--font-display)]
+                    text-[12px] font-semibold whitespace-nowrap
                     transition-all duration-300 cursor-pointer
                     ${isActive
                       ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/20'
@@ -138,7 +135,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                 >
                   {callout.label}
                   {count > 0 && (
-                    <span key={count} className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center animate-badge-pop ${isActive ? 'bg-white text-cyan-600' : 'bg-cyan-600 text-white'}`}>
+                    <span key={count} className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center ${isActive ? 'bg-white text-cyan-600' : 'bg-cyan-600 text-white'}`}>
                       {count}
                     </span>
                   )}
@@ -161,7 +158,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
         </span>
         <div
           onClick={() => onGenderChange(gender === 'female' ? 'male' : 'female')}
-          className="w-11 h-6 bg-gradient-to-r from-cyan-500 to-cyan-600 shadow-inner rounded-full relative cursor-pointer flex-shrink-0"
+          className="w-11 h-6 bg-cyan-600 rounded-full relative cursor-pointer flex-shrink-0"
         >
           <div
             className={`w-5 h-5 bg-white rounded-full absolute top-0.5 shadow transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${

@@ -10,6 +10,7 @@ type CartProps = {
   onClear: () => void
   onSessionChange: (n: number) => void
   onSubmit: () => void
+  onPayOnline: (amount: number, services: string, sessions: number) => void
 }
 
 export default function Cart({
@@ -20,6 +21,7 @@ export default function Cart({
   onClear,
   onSessionChange,
   onSubmit,
+  onPayOnline,
 }: CartProps) {
   const activeZones = Object.entries(selected).filter(([, ids]) => ids.size > 0)
   if (activeZones.length === 0) return null
@@ -91,11 +93,10 @@ export default function Cart({
   const needSessions = Math.max(0, DISCOUNT.minSessions - sessions)
 
   return (
-    <div className="card-premium overflow-hidden animate-in relative">
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-500 via-emerald-400 to-cyan-500 z-20 shadow-[0_1px_8px_rgba(6,182,212,0.3)]" />
+    <div className="card overflow-hidden animate-in">
       {/* Header */}
       <div className="px-5 pt-4 pb-3 border-b border-gray-100 flex justify-between items-center">
-        <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">Ваш выбор</h3>
+        <h3 className="text-base font-bold text-gray-800">Ваш выбор</h3>
         <button
           onClick={onClear}
           className="text-xs text-red-500 font-medium px-2 py-1 rounded-md hover:bg-red-50 transition-colors"
@@ -160,7 +161,7 @@ export default function Cart({
                     </span>
                     <button
                       onClick={() => onRemoveItem(zone, item.id)}
-                      className="w-[22px] h-[22px] flex items-center justify-center text-gray-400 rounded hover:text-red-500 hover:bg-red-50 hover:rotate-90 transition-transform transition-colors"
+                      className="w-[22px] h-[22px] flex items-center justify-center text-gray-400 rounded hover:text-red-500 hover:bg-red-50 transition-colors"
                     >
                       <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
                         <line x1="3" y1="3" x2="11" y2="11" />
@@ -191,13 +192,32 @@ export default function Cart({
           </div>
         )}
 
-        {/* CTA — главный герой */}
+        {/* Оплатить онлайн — главная кнопка */}
+        <button
+          onClick={() => {
+            const finalAmount = canDiscount ? total : baseTotal
+            const serviceNames = [
+              ...appliedComplexes.map(c => c.title),
+              ...activeZones.flatMap(([zone, ids]) =>
+                ZONES[zone].items
+                  .filter(i => ids.has(i.id) && !usedInComplex.has(i.id))
+                  .map(i => i.title)
+              )
+            ].join(', ')
+            onPayOnline(finalAmount, serviceNames, sessions)
+          }}
+          className="w-full mt-2 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 transition-all"
+        >
+          <span className="text-lg font-bold tracking-wide block">Оплатить онлайн</span>
+          {canDiscount && <span className="text-xs font-medium text-white/70 block mt-0.5">+1 сеанс в подарок</span>}
+        </button>
+
+        {/* Записаться — вторичная */}
         <button
           onClick={onSubmit}
-          className="w-full mt-2 py-4 rounded-xl bg-gradient-to-r from-cyan-600 via-cyan-500 to-emerald-400 text-white text-lg font-bold tracking-wide hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 transition-all relative overflow-hidden group"
+          className="w-full mt-2 py-3 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:bg-gray-50 transition-all"
         >
-          <span className="relative z-10">Записаться</span>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+          Оставить заявку
         </button>
       </div>
 
@@ -213,19 +233,13 @@ export default function Cart({
           <>
             {/* Celebration header */}
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-bold text-gray-800 font-[family-name:var(--font-display)]">🎉 Скидка 50%</span>
+              <span className="text-sm font-bold text-gray-800 font-[family-name:var(--font-display)]">Скидка 50% + 1 сеанс при оплате онлайн</span>
               <button
                 onClick={() => onSessionChange(1)}
                 className="text-xs text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
               >
                 Отменить
               </button>
-            </div>
-
-            {/* Bonus badge — отдельная полоска */}
-            <div className="animate-fade-up rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 px-3 py-2 flex items-center justify-between shadow-sm">
-              <span className="text-xs font-semibold text-white">Бонусный сеанс</span>
-              <span className="text-xs font-bold text-white/90">+1 бесплатно</span>
             </div>
 
             {/* Session counter */}
@@ -263,7 +277,7 @@ export default function Cart({
               <span className="text-sm font-semibold text-cyan-600">{formatPrice(Math.round(baseTotal * 0.5))}</span>
             </div>
             <p className="text-[11px] text-gray-400 mb-3">
-              От 5 сеансов — цена вдвое ниже + бонусный сеанс
+              От 5 сеансов — скидка 50%
             </p>
 
             {/* Compact session counter */}

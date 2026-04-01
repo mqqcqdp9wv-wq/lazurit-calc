@@ -12,8 +12,7 @@ type ServiceListProps = {
 
 export default function ServiceList({ zone, selectedIds, priceMultiplier, gender, onToggle }: ServiceListProps) {
   return (
-    <div className="card-premium overflow-hidden animate-in relative">
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-500 via-emerald-400 to-cyan-500 z-20 shadow-[0_1px_8px_rgba(6,182,212,0.3)]" />
+    <div className="card overflow-hidden animate-in">
       <div className="px-5 pt-4 pb-3 border-b border-gray-100">
         <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">{zone.title}</h3>
         <p className="text-xs text-gray-400 mt-0.5">Цена за 1 сеанс</p>
@@ -36,7 +35,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                 onClick={() => onToggle(zone.key, item.id)}
                 className={`
                   flex items-center gap-2 px-4 py-3 cursor-pointer
-                  transition-colors duration-300 hover:-translate-y-[1px] hover:shadow-sm
+                  transition-colors duration-300
                   ${isSelected ? 'bg-cyan-50' : 'hover:bg-cyan-50/50'}
                 `}
               >

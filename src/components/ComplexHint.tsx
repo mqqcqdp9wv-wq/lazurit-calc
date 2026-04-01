@@ -130,18 +130,15 @@ export default function ComplexHint({ selected, priceMultiplier, sessions, onAdd
             className={`
               animate-fade-up rounded-xl border-2 p-4 transition-all duration-500
               ${quest.isComplete
-                ? 'border-emerald-400/60 bg-gradient-to-br from-emerald-50 to-white shadow-lg shadow-emerald-100/50 relative overflow-hidden'
-                : 'border-gray-200/60 card-premium'
+                ? 'border-emerald-400 bg-emerald-50'
+                : 'border-gray-200 bg-white'
               }
             `}
             style={{ animationDelay: `${index * 80}ms` }}
           >
-            {quest.isComplete && (
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-100/20 to-transparent animate-shimmer pointer-events-none rounded-xl" />
-            )}
             {/* Title + badge */}
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-sm font-bold font-[family-name:var(--font-display)] ${quest.isComplete ? 'text-emerald-700' : 'text-gray-800'}`}>
+              <span className={`text-sm font-bold ${quest.isComplete ? 'text-emerald-700' : 'text-gray-800'}`}>
                 {quest.complex.title}
               </span>
               {quest.isComplete && (
@@ -211,7 +208,7 @@ export default function ComplexHint({ selected, priceMultiplier, sessions, onAdd
                   const items = quest.missingIds.map(id => ({ zone: getItemZone(id), id }))
                   onAddItems(items)
                 }}
-                className="w-full mt-2 py-2 px-3 rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 text-white text-xs font-semibold transition-colors cursor-pointer"
+                className="w-full mt-2 py-2 px-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold transition-colors cursor-pointer"
               >
                 Добавить: {quest.missingTitles.join(', ')}
               </button>
