@@ -338,7 +338,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
               </div>
               <span className="text-xs text-gray-500 leading-relaxed">
                 Я даю согласие на{' '}
-                <a href="https://lazepil.ru/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-600 underline hover:text-cyan-700">
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-600 underline hover:text-cyan-700">
                   обработку персональных данных
                 </a>
               </span>
