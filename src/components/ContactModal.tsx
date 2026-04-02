@@ -87,24 +87,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
       const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT
       if (!endpoint) { setSending(false); return }
 
-      // Also save to Google Sheets via POST (no-cors)
-      fetch(endpoint, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone: fullPhone,
-          telegram: telegram.trim(),
-          gender,
-          sessions,
-          services,
-          total: totalPrice || '',
-          date: new Date().toISOString(),
-        }),
-      }).catch(() => {})
-
-      // Create payment via JSONP
+      // Create payment via JSONP (saves to Sheets + sends email inside handlePaymentJsonp)
       const callbackName = '_yukassa_cb_' + Date.now()
       const params = new URLSearchParams({
         action: 'payment',
@@ -149,32 +132,52 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
         setSending(false)
       }
     } else {
-      // Form mode: just submit to Google Sheets
+      // Form mode: submit via JSONP (same pattern as payments — fetch POST loses body on redirect)
+      const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT
+      if (!endpoint) { setSending(false); return }
+
+      const callbackName = '_form_cb_' + Date.now()
+      const params = new URLSearchParams({
+        action: 'form',
+        name: name.trim(),
+        phone: fullPhone,
+        telegram: telegram.trim(),
+        gender,
+        sessions: String(sessions),
+        services,
+        total: totalPrice || '',
+        date: new Date().toISOString(),
+        callback: callbackName,
+      })
+
       try {
-        const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT
-        if (endpoint) {
-          await fetch(endpoint, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: name.trim(),
-              phone: fullPhone,
-              telegram: telegram.trim(),
-              gender,
-              sessions,
-              services,
-              total: totalPrice || '',
-              date: new Date().toISOString(),
-            }),
-          })
-        }
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => { reject(new Error('timeout')); cleanup() }, 15000)
+
+          function cleanup() {
+            clearTimeout(timeout)
+            delete (window as unknown as Record<string, unknown>)[callbackName]
+            script.remove()
+          }
+
+          ;(window as unknown as Record<string, unknown>)[callbackName] = (data: { success?: boolean; error?: string }) => {
+            cleanup()
+            if (data.success) resolve()
+            else reject(new Error(data.error || 'Form submission failed'))
+          }
+
+          const script = document.createElement('script')
+          script.src = endpoint + '?' + params.toString()
+          script.onerror = () => { cleanup(); reject(new Error('Script load failed')) }
+          document.head.appendChild(script)
+        })
         setSubmitted(true)
       } catch {
-        setSubmitted(true)
-      } finally {
+        alert('Не удалось отправить заявку. Попробуйте позже или напишите нам в мессенджер.')
         setSending(false)
+        return
       }
+      setSending(false)
     }
   }
 

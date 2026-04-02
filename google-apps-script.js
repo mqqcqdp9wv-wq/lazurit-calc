@@ -20,7 +20,48 @@ function doPost(e) {
 function doGet(e) {
   var params = e && e.parameter ? e.parameter : {}
   if (params.action === 'payment') return handlePaymentJsonp(params)
+  if (params.action === 'form') return handleFormJsonp(params)
   return respond({ status: 'ok' })
+}
+
+function handleFormJsonp(params) {
+  var callback = params.callback || 'callback'
+
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME)
+    if (!sheet) {
+      return ContentService.createTextOutput(callback + '({"error":"Sheet not found"})')
+        .setMimeType(ContentService.MimeType.JAVASCRIPT)
+    }
+
+    var date = params.date ? new Date(params.date) : new Date()
+    var dateStr = Utilities.formatDate(date, 'Europe/Moscow', 'dd.MM.yyyy HH:mm')
+
+    sheet.appendRow([
+      dateStr, params.name || '', "'" + (params.phone || ''),
+      params.telegram ? '@' + params.telegram : '',
+      params.gender === 'male' ? 'М' : 'Ж',
+      params.services || '', params.sessions || 1, params.total || '', 'Новая'
+    ])
+
+    MailApp.sendEmail(EMAIL_TO, 'Новая заявка — ' + (params.name || 'Клиент'), [
+      'Новая заявка с калькулятора calc.lazepil.ru',
+      '', 'ФИО: ' + (params.name || '—'),
+      'Телефон: ' + (params.phone || '—'),
+      'Telegram: ' + (params.telegram ? '@' + params.telegram : '—'),
+      'Пол: ' + (params.gender === 'male' ? 'Мужской' : 'Женский'),
+      '', 'Услуги: ' + (params.services || '—'),
+      'Сеансов: ' + (params.sessions || 1),
+      'Сумма: ' + (params.total || '—'),
+      '', 'Дата: ' + dateStr
+    ].join('\n'))
+
+    return ContentService.createTextOutput(callback + '({"success":true})')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT)
+  } catch (err) {
+    return ContentService.createTextOutput(callback + '({"error":"' + err.toString().replace(/"/g, '\\"') + '"})')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT)
+  }
 }
 
 function handleForm(data) {
