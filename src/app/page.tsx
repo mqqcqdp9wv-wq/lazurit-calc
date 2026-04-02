@@ -294,8 +294,8 @@ export default function Calculator() {
                 <span className="text-[10px] text-gray-500 block mt-0.5">Совмещайте зоны — цена ниже</span>
               </div>
               <div className="text-center p-2.5 rounded-xl bg-gray-50">
-                <span className="text-base font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">5+1</span>
-                <span className="text-[10px] text-gray-500 block mt-0.5">От 5 сеансов +1 в подарок</span>
+                <span className="text-base font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">от 5</span>
+                <span className="text-[10px] text-gray-500 block mt-0.5">+1 сеанс в подарок</span>
                 <span className="text-[10px] text-gray-400 block">при оплате онлайн</span>
               </div>
             </div>
@@ -318,16 +318,9 @@ export default function Calculator() {
             {/* Empty state — только десктоп */}
             {!activeZone && !hasAnySelected && (
               <div className="hidden lg:block card p-8">
-                <div className="flex items-start gap-3 mb-5">
-                  <div className="w-12 h-12 bg-cyan-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-600">
-                      <path d="M8 1a2 2 0 0 1 2 2v6.5a.5.5 0 0 1 1 0V5a2 2 0 1 1 4 0v5.5a.5.5 0 0 1 1 0V7a2 2 0 1 1 4 0v7a8 8 0 0 1-8 8H9.5A5.5 5.5 0 0 1 4 16.5V9a2 2 0 1 1 4 0V3a2 2 0 0 1 0-4z" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
-                    <p className="text-sm text-gray-400">Нажмите на любую часть тела, чтобы увидеть доступные услуги</p>
-                  </div>
+                <div className="mb-5">
+                  <h3 className="text-lg font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
+                  <p className="text-sm text-gray-400">Нажмите на любую часть тела, чтобы увидеть доступные услуги</p>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 rounded-xl bg-gray-50">
@@ -339,8 +332,8 @@ export default function Calculator() {
                     <span className="text-[10px] text-gray-500 block mt-1">Совмещайте зоны — цена ниже</span>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-gray-50">
-                    <span className="text-lg font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">5+1</span>
-                    <span className="text-[10px] text-gray-500 block mt-1">От 5 сеансов +1 в подарок</span>
+                    <span className="text-lg font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">от 5</span>
+                    <span className="text-[10px] text-gray-500 block mt-1">+1 сеанс в подарок</span>
                     <span className="text-[10px] text-gray-400 block">при оплате онлайн</span>
                   </div>
                 </div>
