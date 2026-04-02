@@ -21,6 +21,8 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+        env:
+          NEXT_PUBLIC_FORM_ENDPOINT: https://script.google.com/macros/s/AKfycbwe6bYJfqM4yN2_UuxnF764m1cv8h3i0RC17CGuFaLsDfB1TGwUBbd0YSlDhY9GsP8n/exec
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
