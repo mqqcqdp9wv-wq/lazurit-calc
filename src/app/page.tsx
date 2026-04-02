@@ -10,6 +10,13 @@ import ContactModal from '@/components/ContactModal'
 
 type Gender = 'female' | 'male'
 
+declare global {
+  interface Window { ym?: (id: number, method: string, goal: string, params?: Record<string, unknown>) => void }
+}
+function ym(goal: string, params?: Record<string, unknown>) {
+  window.ym?.(108371124, 'reachGoal', goal, params)
+}
+
 export default function Calculator() {
   const [gender, setGender] = useState<Gender>('female')
   const [activeZone, setActiveZone] = useState<string | null>(null)
@@ -182,6 +189,7 @@ export default function Calculator() {
     setTotalPriceText(formatPrice(final) + suffix)
     setModalMode('form')
     setModalOpen(true)
+    ym('open_form', { services: lines.length, sessions })
   }, [selected, sessions, priceMultiplier])
 
   const handleClear = useCallback(() => {
@@ -236,6 +244,7 @@ export default function Calculator() {
     setPaymentAmount(amount)
     setModalMode('payment')
     setModalOpen(true)
+    ym('open_payment', { amount, services: lines.length, sessions })
   }, [selected, sessions, priceMultiplier])
 
   const hasAnySelected = Object.values(selected).some((s) => s.size > 0)

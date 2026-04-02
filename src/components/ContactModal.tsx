@@ -2,6 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react'
 
+declare global {
+  interface Window { ym?: (id: number, method: string, goal: string, params?: Record<string, unknown>) => void }
+}
+function ym(goal: string) {
+  window.ym?.(108371124, 'reachGoal', goal)
+}
+
 type OrderLine = { title: string; price: string }
 
 type ContactModalProps = {
@@ -115,6 +122,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
           ;(window as unknown as Record<string, unknown>)[callbackName] = (data: { confirmation_url?: string; error?: string }) => {
             cleanup()
             if (data.confirmation_url) {
+              ym('payment_redirect')
               window.location.href = data.confirmation_url
               resolve()
             } else {
@@ -171,6 +179,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
           script.onerror = () => { cleanup(); reject(new Error('Script load failed')) }
           document.head.appendChild(script)
         })
+        ym('form_submitted')
         setSubmitted(true)
       } catch {
         alert('Не удалось отправить заявку. Попробуйте позже или напишите нам в мессенджер.')
@@ -379,6 +388,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                     href={tgLink}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => ym('click_telegram')}
                     className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#2AABEE]/10 text-[#2AABEE] text-sm font-medium hover:bg-[#2AABEE]/20 transition-colors"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -390,6 +400,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                     href={waLink}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => ym('click_whatsapp')}
                     className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#25D366]/10 text-[#25D366] text-sm font-medium hover:bg-[#25D366]/20 transition-colors"
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
