@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const montserrat = Montserrat({
+const inter = Inter({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-montserrat",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -20,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${montserrat.variable} antialiased`}>
-      <body className="min-h-screen font-sans text-body leading-relaxed">
+    <html lang="ru" className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
+      <body className="min-h-screen font-sans">
         {children}
         <Script id="yandex-metrika" strategy="afterInteractive">{`
           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};

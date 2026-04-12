@@ -40,14 +40,14 @@ export default function ServicePopover({ zone, selectedIds, priceMultiplier, onT
               className={`
                 flex items-center gap-2.5 px-4 py-2 cursor-pointer
                 transition-colors duration-200
-                ${isSelected ? 'bg-accent-light' : 'hover:bg-gray-50'}
+                ${isSelected ? 'bg-cyan-50' : 'hover:bg-gray-50'}
               `}
             >
               {/* Checkbox */}
               <div className={`
                 w-[18px] h-[18px] rounded flex items-center justify-center flex-shrink-0
                 border-2 transition-all duration-200
-                ${isSelected ? 'bg-accent border-accent' : 'border-gray-300'}
+                ${isSelected ? 'bg-cyan-600 border-cyan-600' : 'border-gray-300'}
               `}>
                 <svg
                   width="10"
@@ -62,7 +62,7 @@ export default function ServicePopover({ zone, selectedIds, priceMultiplier, onT
               </div>
 
               <span className="flex-1 text-[13px] font-medium text-gray-700">{item.title}</span>
-              <span className="text-[13px] font-semibold text-accent whitespace-nowrap">
+              <span className="text-[13px] font-semibold text-cyan-600 whitespace-nowrap">
                 {formatPrice(price)}
               </span>
             </li>

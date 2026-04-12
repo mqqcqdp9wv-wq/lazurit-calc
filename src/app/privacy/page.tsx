@@ -1,9 +1,9 @@
 export default function PrivacyPage() {
   return (
     <div className="max-w-3xl mx-auto px-5 py-10">
-      <a href="/" className="inline-block mb-6 text-sm text-accent hover:text-accent-dark transition-colors">&larr; Назад к калькулятору</a>
+      <a href="/" className="inline-block mb-6 text-sm text-cyan-600 hover:text-cyan-700 transition-colors">&larr; Назад к калькулятору</a>
 
-      <h1 className="text-2xl font-bold mb-6">Политика обработки персональных данных</h1>
+      <h1 className="text-2xl font-bold mb-6 font-[family-name:var(--font-display)]">Политика обработки персональных данных</h1>
 
       <div className="prose prose-sm prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
         <section>
@@ -23,8 +23,8 @@ export default function PrivacyPage() {
             <li>
               Настоящая политика Оператора в отношении обработки персональных данных (далее&nbsp;&mdash; Политика)
               применяется ко всей информации, которую Оператор может получить о посетителях веб-сайтов{" "}
-              <a href="https://lazepil.ru" className="text-accent underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a> и{" "}
-              <a href="https://calc.lazepil.ru" className="text-accent underline" target="_blank" rel="noopener noreferrer">https://calc.lazepil.ru</a>.
+              <a href="https://lazepil.ru" className="text-cyan-600 underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a> и{" "}
+              <a href="https://calc.lazepil.ru" className="text-cyan-600 underline" target="_blank" rel="noopener noreferrer">https://calc.lazepil.ru</a>.
             </li>
           </ol>
         </section>
@@ -43,8 +43,8 @@ export default function PrivacyPage() {
             <li>
               <strong>Веб-сайт</strong>&nbsp;&mdash; совокупность графических и информационных материалов, а также
               программ для ЭВМ и баз данных, обеспечивающих их доступность в сети интернет по сетевым адресам{" "}
-              <a href="https://lazepil.ru" className="text-accent underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a> и{" "}
-              <a href="https://calc.lazepil.ru" className="text-accent underline" target="_blank" rel="noopener noreferrer">https://calc.lazepil.ru</a>.
+              <a href="https://lazepil.ru" className="text-cyan-600 underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a> и{" "}
+              <a href="https://calc.lazepil.ru" className="text-cyan-600 underline" target="_blank" rel="noopener noreferrer">https://calc.lazepil.ru</a>.
             </li>
             <li>
               <strong>Информационная система персональных данных</strong>&nbsp;&mdash; совокупность содержащихся
@@ -128,8 +128,8 @@ export default function PrivacyPage() {
           <ul className="list-none space-y-1">
             <li><strong>ИП Воробьев Вадим Вадимович</strong></li>
             <li>ОГРНИП: 321482700041252</li>
-            <li>Email: <a href="mailto:admin@lazepil.ru" className="text-accent underline">admin@lazepil.ru</a></li>
-            <li>Сайт: <a href="https://lazepil.ru" className="text-accent underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a></li>
+            <li>Email: <a href="mailto:admin@lazepil.ru" className="text-cyan-600 underline">admin@lazepil.ru</a></li>
+            <li>Сайт: <a href="https://lazepil.ru" className="text-cyan-600 underline" target="_blank" rel="noopener noreferrer">https://lazepil.ru</a></li>
           </ul>
         </section>
       </div>

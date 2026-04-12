@@ -14,7 +14,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
   return (
     <div className="card overflow-hidden animate-in">
       <div className="px-5 pt-4 pb-3 border-b border-gray-100">
-        <h3 className="text-base font-bold text-gray-800">{zone.title}</h3>
+        <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">{zone.title}</h3>
         <p className="text-xs text-gray-400 mt-0.5">Цена за 1 сеанс</p>
       </div>
 
@@ -36,14 +36,14 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                 className={`
                   flex items-center gap-2 px-4 py-3 cursor-pointer
                   transition-colors duration-300
-                  ${isSelected ? 'bg-accent-light' : 'hover:bg-accent-light/50'}
+                  ${isSelected ? 'bg-cyan-50' : 'hover:bg-cyan-50/50'}
                 `}
               >
                 {/* Checkbox */}
                 <div className={`
                   w-[22px] h-[22px] rounded-md border-2 flex items-center justify-center flex-shrink-0
                   transition-all duration-300
-                  ${isSelected ? 'bg-accent border-accent' : 'border-gray-200'}
+                  ${isSelected ? 'bg-cyan-600 border-cyan-600' : 'border-gray-200'}
                 `}>
                   <svg
                     width="12"
@@ -71,7 +71,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                   </span>
                   {item.hint && <span className="text-[10px] text-gray-400 block leading-tight">{item.hint}</span>}
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-accent whitespace-nowrap">
+                <span className="text-xs sm:text-sm font-semibold text-cyan-600 whitespace-nowrap">
                   {formatPrice(price)}
                 </span>
               </div>

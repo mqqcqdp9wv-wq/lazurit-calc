@@ -277,11 +277,11 @@ export default function Calculator() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Feedback banner */}
       <div className="bg-gray-100 border-b border-gray-200 text-center py-1.5 px-4">
         <span className="text-xs text-gray-500">
-          Есть идея? <a href="https://t.me/Lazurit_msk" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-dark transition-colors">Напишите нам</a>
+          Есть идея? <a href="https://t.me/Lazurit_msk" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 transition-colors">Напишите нам</a>
         </span>
       </div>
 
@@ -290,20 +290,20 @@ export default function Calculator() {
         {!activeZone && !hasAnySelected && (
           <div className="lg:hidden card p-5 mb-5">
             <div className="flex flex-col items-center text-center mb-4">
-              <h3 className="text-base font-bold text-heading">Выберите зону</h3>
+              <h3 className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
               <p className="text-sm text-gray-400">Нажмите на любую часть тела</p>
             </div>
             <div className="grid grid-cols-3 gap-2">
               <div className="text-center p-2.5 rounded-xl bg-gray-50">
-                <span className="text-base font-extrabold text-accent block">−50%</span>
+                <span className="text-base font-extrabold text-cyan-600 font-[family-name:var(--font-display)] block">−50%</span>
                 <span className="text-[10px] text-gray-500 block mt-0.5">Скидка от 5 сеансов</span>
               </div>
               <div className="text-center p-2.5 rounded-xl bg-gray-50">
-                <span className="text-base font-extrabold text-amber-500 block">✦</span>
+                <span className="text-base font-extrabold text-amber-500 font-[family-name:var(--font-display)] block">✦</span>
                 <span className="text-[10px] text-gray-500 block mt-0.5">Совмещайте зоны — цена ниже</span>
               </div>
               <div className="text-center p-2.5 rounded-xl bg-gray-50">
-                <span className="text-base font-extrabold text-emerald-600 block">от 5</span>
+                <span className="text-base font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">от 5</span>
                 <span className="text-[10px] text-gray-500 block mt-0.5">+1 сеанс в подарок</span>
                 <span className="text-[10px] text-gray-400 block">при оплате онлайн</span>
               </div>
@@ -328,20 +328,20 @@ export default function Calculator() {
             {!activeZone && !hasAnySelected && (
               <div className="hidden lg:block card p-8">
                 <div className="mb-5">
-                  <h3 className="text-lg font-bold text-heading">Выберите зону</h3>
+                  <h3 className="text-lg font-bold text-gray-800 font-[family-name:var(--font-display)]">Выберите зону</h3>
                   <p className="text-sm text-gray-400">Нажмите на любую часть тела, чтобы увидеть доступные услуги</p>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="text-center p-3 rounded-xl bg-gray-50">
-                    <span className="text-lg font-extrabold text-accent block">−50%</span>
+                    <span className="text-lg font-extrabold text-cyan-600 font-[family-name:var(--font-display)] block">−50%</span>
                     <span className="text-[10px] text-gray-500 block mt-1">Скидка от 5 сеансов</span>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-gray-50">
-                    <span className="text-lg font-extrabold text-amber-500 block">✦</span>
+                    <span className="text-lg font-extrabold text-amber-500 font-[family-name:var(--font-display)] block">✦</span>
                     <span className="text-[10px] text-gray-500 block mt-1">Совмещайте зоны — цена ниже</span>
                   </div>
                   <div className="text-center p-3 rounded-xl bg-gray-50">
-                    <span className="text-lg font-extrabold text-emerald-600 block">от 5</span>
+                    <span className="text-lg font-extrabold text-emerald-600 font-[family-name:var(--font-display)] block">от 5</span>
                     <span className="text-[10px] text-gray-500 block mt-1">+1 сеанс в подарок</span>
                     <span className="text-[10px] text-gray-400 block">при оплате онлайн</span>
                   </div>
@@ -420,7 +420,7 @@ export default function Calculator() {
               <circle cx="28" cy="28" r="24" stroke="#10B981" strokeWidth="2" className="animate-circle-draw" />
               <polyline points="16,28 25,37 40,22" stroke="#10B981" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" className="animate-draw-check" />
             </svg>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Оплата прошла!</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-2 font-[family-name:var(--font-display)]">Оплата прошла!</h3>
             <p className="text-sm text-gray-500 mb-5">Выберите удобное время для записи</p>
 
             <a
@@ -477,7 +477,7 @@ export default function Calculator() {
       {paymentLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-elevated px-8 py-6 text-center">
-            <div className="w-8 h-8 border-3 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-8 h-8 border-3 border-cyan-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             <p className="text-sm text-gray-600">Создаём платёж...</p>
           </div>
         </div>
@@ -487,7 +487,7 @@ export default function Calculator() {
       {showScrollTop && (activeZone || hasAnySelected) && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="lg:hidden fixed bottom-5 right-5 z-40 w-11 h-11 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:text-accent hover:border-accent/30 active:scale-95 transition-all"
+          className="lg:hidden fixed bottom-5 right-5 z-40 w-11 h-11 bg-white rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:text-cyan-600 hover:border-cyan-300 active:scale-95 transition-all"
           aria-label="Наверх к выбору зон"
         >
           <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
