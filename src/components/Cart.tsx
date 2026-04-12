@@ -179,8 +179,8 @@ export default function Cart({
       <div className="px-5 py-4">
         {/* Price line */}
         <div className="flex justify-between items-center pt-2 pb-3 border-t border-gray-100">
-          <span className="text-base font-bold text-gray-800 font-[family-name:var(--font-display)]">Итого</span>
-          <span key={total} className={`text-2xl font-bold animate-price-pop font-[family-name:var(--font-display)] ${canDiscount ? 'text-emerald-600' : 'text-cyan-600'}`}>
+          <span className="text-base font-bold text-gray-800">Итого</span>
+          <span key={total} className={`text-2xl font-bold animate-price-pop ${canDiscount ? 'text-emerald-600' : 'text-accent'}`}>
             {canDiscount ? formatPrice(total) : formatPrice(baseTotal)}
           </span>
         </div>
@@ -205,7 +205,7 @@ export default function Cart({
           <>
             {/* Celebration header */}
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-bold text-gray-800 font-[family-name:var(--font-display)]">Скидка 50% + 1 сеанс при оплате онлайн</span>
+              <span className="text-sm font-bold text-gray-800">Скидка 50% + 1 сеанс при оплате онлайн</span>
               <button
                 onClick={() => onSessionChange(1)}
                 className="text-xs text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
@@ -246,7 +246,7 @@ export default function Cart({
           <>
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-gray-600">Курсом дешевле</span>
-              <span className="text-sm font-semibold text-cyan-600">{formatPrice(Math.round(baseTotal * 0.5))}</span>
+              <span className="text-sm font-semibold text-accent">{formatPrice(Math.round(baseTotal * 0.5))}</span>
             </div>
             <p className="text-[11px] text-gray-400 mb-3">
               От 5 сеансов — скидка 50%
@@ -259,7 +259,7 @@ export default function Cart({
                   <div
                     key={n}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      sessions >= n ? 'bg-cyan-500' : 'bg-gray-200'
+                      sessions >= n ? 'bg-accent' : 'bg-gray-200'
                     }`}
                   />
                 ))}
@@ -267,7 +267,7 @@ export default function Cart({
               <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
                 <button
                   onClick={() => onSessionChange(Math.max(1, sessions - 1))}
-                  className="w-9 h-9 flex items-center justify-center text-cyan-600 font-semibold hover:bg-cyan-50 transition-colors"
+                  className="w-9 h-9 flex items-center justify-center text-accent font-semibold hover:bg-accent-light transition-colors"
                 >
                   −
                 </button>
@@ -282,7 +282,7 @@ export default function Cart({
                 />
                 <button
                   onClick={() => onSessionChange(Math.min(15, sessions + 1))}
-                  className="w-9 h-9 flex items-center justify-center text-cyan-600 font-semibold hover:bg-cyan-50 transition-colors"
+                  className="w-9 h-9 flex items-center justify-center text-accent font-semibold hover:bg-accent-light transition-colors"
                 >
                   +
                 </button>
@@ -308,7 +308,7 @@ export default function Cart({
             ].join(', ')
             onPayOnline(finalAmount, serviceNames, sessions)
           }}
-          className="w-full py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 transition-all"
+          className="w-full py-3.5 rounded-xl bg-accent hover:bg-accent-dark text-white hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/30 active:translate-y-0 transition-all"
         >
           <span className="text-lg font-bold tracking-wide block">Оплатить онлайн</span>
           {canDiscount && <span className="text-xs font-medium text-white/70 block mt-0.5">+1 сеанс в подарок</span>}

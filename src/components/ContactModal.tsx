@@ -238,7 +238,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
 
         {!submitted ? (
           <div className="p-6">
-            <h3 className="text-lg font-bold text-center mb-4 font-[family-name:var(--font-display)]">
+            <h3 className="text-lg font-bold text-center mb-4">
               {isPayment ? 'Оплата онлайн' : 'Записаться'}
             </h3>
 
@@ -256,7 +256,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                 {totalPrice && (
                   <div className="flex justify-between mt-2 pt-2 border-t border-gray-200 text-sm font-bold text-gray-800">
                     <span>Итого</span>
-                    <span className={isPayment ? 'text-emerald-600' : 'text-cyan-600'}>{totalPrice}</span>
+                    <span className={isPayment ? 'text-emerald-600' : 'text-accent'}>{totalPrice}</span>
                   </div>
                 )}
               </div>
@@ -271,7 +271,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Фамилия Имя Отчество"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 outline-none transition-all bg-white"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-accent focus:ring-1 focus:ring-accent/30 outline-none transition-all bg-white"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                           <button
                             key={c.code}
                             onClick={() => { setCountryIdx(idx); setCountryOpen(false); setPhone('') }}
-                            className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${idx === countryIdx ? 'bg-cyan-50 text-cyan-700' : 'text-gray-700'}`}
+                            className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${idx === countryIdx ? 'bg-accent-light text-accent-dark' : 'text-gray-700'}`}
                           >
                             <span className="text-base">{c.flag}</span>
                             <span className="font-medium">{c.code}</span>
@@ -313,7 +313,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                     value={formatPhoneDigits(phone)}
                     onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder=""
-                    className="flex-1 px-3.5 py-2.5 rounded-r-xl border border-gray-200 text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 outline-none transition-all bg-white min-w-0"
+                    className="flex-1 px-3.5 py-2.5 rounded-r-xl border border-gray-200 text-sm focus:border-accent focus:ring-1 focus:ring-accent/30 outline-none transition-all bg-white min-w-0"
                   />
                 </div>
               </div>
@@ -327,7 +327,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                     value={telegram}
                     onChange={(e) => setTelegram(e.target.value.replace(/^@/, ''))}
                     placeholder="username"
-                    className="w-full pl-8 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 outline-none transition-all bg-white"
+                    className="w-full pl-8 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-accent focus:ring-1 focus:ring-accent/30 outline-none transition-all bg-white"
                   />
                 </div>
               </div>
@@ -339,7 +339,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                 onClick={() => setConsent(!consent)}
                 className={`
                   w-5 h-5 rounded flex items-center justify-center flex-shrink-0 border-2 mt-0.5 transition-all cursor-pointer
-                  ${consent ? 'bg-cyan-600 border-cyan-600' : 'border-gray-300'}
+                  ${consent ? 'bg-accent border-accent' : 'border-gray-300'}
                 `}
               >
                 <svg width="12" height="12" fill="none" stroke="white" strokeWidth="2.5"
@@ -350,7 +350,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
               </div>
               <span className="text-xs text-gray-500 leading-relaxed">
                 Я даю согласие на{' '}
-                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-600 underline hover:text-cyan-700">
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:text-accent-dark">
                   обработку персональных данных
                 </a>
               </span>
@@ -364,7 +364,7 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
                 ${canSubmit
                   ? isPayment
                     ? 'bg-emerald-600 hover:bg-emerald-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0'
-                    : 'bg-cyan-600 hover:bg-cyan-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0'
+                    : 'bg-accent hover:bg-accent-dark hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0'
                   : 'bg-gray-300 cursor-not-allowed'
                 }`}
             >

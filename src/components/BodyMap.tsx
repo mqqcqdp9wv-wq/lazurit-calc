@@ -86,7 +86,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                       y1={dotY}
                       x2={1536}
                       y2={dotY}
-                      stroke={isActive ? '#0891B2' : '#CBD5E1'}
+                      stroke={isActive ? '#D97757' : '#CBD5E1'}
                       strokeWidth={isActive ? 3 : 2}
                       strokeDasharray={isActive ? 'none' : '8 6'}
                       className="transition-all duration-300 pointer-events-none"
@@ -95,7 +95,7 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                       cx={dotX}
                       cy={dotY}
                       r={isActive ? 12 : 10}
-                      fill={isActive ? '#0891B2' : '#06B6D4'}
+                      fill={isActive ? '#D97757' : '#D97757'}
                       opacity={isActive ? 1 : 0.6}
                       className="transition-all duration-300 cursor-pointer"
                       onClick={() => onZoneClick(callout.zone)}
@@ -123,17 +123,17 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
                     text-[12px] font-semibold whitespace-nowrap
                     transition-all duration-300 cursor-pointer
                     ${isActive
-                      ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/20'
+                      ? 'bg-accent text-white shadow-md shadow-accent/20'
                       : hasSelection
-                        ? 'bg-cyan-50 text-cyan-700 hover:bg-cyan-100'
-                        : 'bg-gray-50 text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
+                        ? 'bg-accent-light text-accent-dark hover:bg-accent/15'
+                        : 'bg-gray-50 text-gray-600 hover:bg-accent-light hover:text-accent-dark'
                     }
                   `}
                   style={{ top: callout.labelTop, transform: 'translateY(-50%)' }}
                 >
                   {callout.label}
                   {count > 0 && (
-                    <span key={count} className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center ${isActive ? 'bg-white text-cyan-600' : 'bg-cyan-600 text-white'}`}>
+                    <span key={count} className={`w-4 h-4 rounded-full text-[9px] font-bold flex items-center justify-center ${isActive ? 'bg-white text-accent' : 'bg-accent text-white'}`}>
                       {count}
                     </span>
                   )}
@@ -148,15 +148,15 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
       <div className="flex items-center justify-center gap-2 py-3 border-t border-gray-100">
         <span
           onClick={() => onGenderChange('female')}
-          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap font-[family-name:var(--font-display)] ${
-            gender === 'female' ? 'text-cyan-600 font-bold' : 'text-gray-500'
+          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap ${
+            gender === 'female' ? 'text-accent font-bold' : 'text-gray-500'
           }`}
         >
           Женский
         </span>
         <div
           onClick={() => onGenderChange(gender === 'female' ? 'male' : 'female')}
-          className="w-11 h-6 bg-cyan-600 rounded-full relative cursor-pointer flex-shrink-0"
+          className="w-11 h-6 bg-accent rounded-full relative cursor-pointer flex-shrink-0"
         >
           <div
             className={`w-5 h-5 bg-white rounded-full absolute top-0.5 shadow transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
@@ -166,8 +166,8 @@ export default function BodyMap({ gender, activeZone, selectedCounts, onZoneClic
         </div>
         <span
           onClick={() => onGenderChange('male')}
-          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap font-[family-name:var(--font-display)] ${
-            gender === 'male' ? 'text-cyan-600 font-bold' : 'text-gray-500'
+          className={`text-xs font-medium cursor-pointer transition-colors whitespace-nowrap ${
+            gender === 'male' ? 'text-accent font-bold' : 'text-gray-500'
           }`}
         >
           Мужской

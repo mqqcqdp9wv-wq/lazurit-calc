@@ -119,7 +119,7 @@ export default function ComplexHint({ selected, priceMultiplier, sessions, onAdd
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider font-[family-name:var(--font-display)]">Комплексы</h3>
+      <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Комплексы</h3>
 
       {quests.map((quest, index) => {
         const progressPercent = Math.round(quest.progress * 100)
@@ -214,7 +214,7 @@ export default function ComplexHint({ selected, priceMultiplier, sessions, onAdd
                   const items = quest.missingIds.map(id => ({ zone: getItemZone(id), id }))
                   onAddItems(items)
                 }}
-                className="w-full mt-2 py-2 px-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold transition-colors cursor-pointer"
+                className="w-full mt-2 py-2 px-3 rounded-lg bg-accent hover:bg-accent-dark text-white text-xs font-semibold transition-colors cursor-pointer"
               >
                 Добавить: {quest.missingTitles.join(', ')}
               </button>
