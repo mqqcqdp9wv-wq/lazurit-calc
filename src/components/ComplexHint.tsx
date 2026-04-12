@@ -1,6 +1,6 @@
 'use client'
 
-import { ZONES, COMPLEXES, ComplexOffer, formatPrice } from '@/data/services'
+import { ZONES, COMPLEXES, DISCOUNT, ComplexOffer, formatPrice } from '@/data/services'
 
 type ComplexHintProps = {
   selected: Record<string, Set<number>>
@@ -200,6 +200,12 @@ export default function ComplexHint({ selected, priceMultiplier, sessions, onAdd
               Выгода: {formatPrice(quest.saving)}
               {sessions > 1 ? ` за ${sessions} сеансов` : ''}
             </div>
+
+            {sessions >= DISCOUNT.minSessions && (
+              <div className="text-[10px] text-emerald-500 mt-0.5">
+                + скидка {DISCOUNT.percent}% уже включена в расчёт
+              </div>
+            )}
 
             {/* Add missing items button */}
             {!quest.isComplete && onAddItems && (

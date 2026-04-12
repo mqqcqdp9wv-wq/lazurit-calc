@@ -191,37 +191,9 @@ export default function Cart({
             {canDiscount && <span className="line-through">{formatPrice(baseTotal)}</span>}
           </div>
         )}
-
-        {/* Оплатить онлайн — главная кнопка */}
-        <button
-          onClick={() => {
-            const finalAmount = canDiscount ? total : baseTotal
-            const serviceNames = [
-              ...appliedComplexes.map(c => c.title),
-              ...activeZones.flatMap(([zone, ids]) =>
-                ZONES[zone].items
-                  .filter(i => ids.has(i.id) && !usedInComplex.has(i.id))
-                  .map(i => i.title)
-              )
-            ].join(', ')
-            onPayOnline(finalAmount, serviceNames, sessions)
-          }}
-          className="w-full mt-2 py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 transition-all"
-        >
-          <span className="text-lg font-bold tracking-wide block">Оплатить онлайн</span>
-          {canDiscount && <span className="text-xs font-medium text-white/70 block mt-0.5">+1 сеанс в подарок</span>}
-        </button>
-
-        {/* Записаться — вторичная */}
-        <button
-          onClick={onSubmit}
-          className="w-full mt-2 py-3 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:bg-gray-50 transition-all"
-        >
-          Оставить заявку
-        </button>
       </div>
 
-      {/* Course upsell — мягкий блок ниже кнопки */}
+      {/* Course upsell — между итогом и кнопками */}
       <div className={`
         animate-fade-up mx-4 mb-4 rounded-xl p-4 transition-all duration-500
         ${canDiscount
@@ -318,6 +290,37 @@ export default function Cart({
             </div>
           </>
         )}
+      </div>
+
+      {/* CTA buttons — после upsell-блока */}
+      <div className="px-5 pb-4">
+        {/* Оплатить онлайн — главная кнопка */}
+        <button
+          onClick={() => {
+            const finalAmount = canDiscount ? total : baseTotal
+            const serviceNames = [
+              ...appliedComplexes.map(c => c.title),
+              ...activeZones.flatMap(([zone, ids]) =>
+                ZONES[zone].items
+                  .filter(i => ids.has(i.id) && !usedInComplex.has(i.id))
+                  .map(i => i.title)
+              )
+            ].join(', ')
+            onPayOnline(finalAmount, serviceNames, sessions)
+          }}
+          className="w-full py-3.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white hover:-translate-y-0.5 hover:shadow-xl hover:shadow-cyan-500/30 active:translate-y-0 transition-all"
+        >
+          <span className="text-lg font-bold tracking-wide block">Оплатить онлайн</span>
+          {canDiscount && <span className="text-xs font-medium text-white/70 block mt-0.5">+1 сеанс в подарок</span>}
+        </button>
+
+        {/* Записаться — вторичная */}
+        <button
+          onClick={onSubmit}
+          className="w-full mt-2 py-3 rounded-xl border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:bg-gray-50 transition-all"
+        >
+          Оставить заявку
+        </button>
       </div>
     </div>
   )

@@ -278,10 +278,10 @@ export default function Calculator() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Beta banner */}
+      {/* Feedback banner */}
       <div className="bg-gray-100 border-b border-gray-200 text-center py-1.5 px-4">
         <span className="text-xs text-gray-500">
-          Бета-версия · <a href="https://t.me/Lazurit_msk" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 transition-colors">Напишите, что улучшить</a>
+          Есть идея? <a href="https://t.me/Lazurit_msk" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 transition-colors">Напишите нам</a>
         </span>
       </div>
 
