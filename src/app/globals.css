@@ -59,6 +59,40 @@ input[type="number"] {
 }
 .animate-price-pop { animation: price-pop 0.4s ease-out; }
 
+/* Hint shine — мягкий пробег света по тексту подсказки */
+@keyframes hint-shine {
+  0% {
+    opacity: 0;
+    transform: translateX(-4px);
+    background-position: 150% 0;
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    background-position: -50% 0;
+  }
+}
+.animate-hint-shine {
+  background: linear-gradient(
+    100deg,
+    #d97706 0%,
+    #d97706 35%,
+    #fbbf24 50%,
+    #d97706 65%,
+    #d97706 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: hint-shine 1.4s ease-out forwards;
+}
+
 @keyframes draw-check {
   from { stroke-dashoffset: 60; }
   to { stroke-dashoffset: 0; }

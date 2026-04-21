@@ -82,7 +82,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                     )}
                   </span>
                   {activeHint === item.id && COMPLEX_ITEM_IDS.has(item.id) ? (
-                    <span className="text-[10px] text-amber-600 block leading-tight animate-fade-up">✦ Выгоднее в комплексе</span>
+                    <span key={`hint-${item.id}-${activeHint}`} className="text-[10px] font-semibold block leading-tight animate-hint-shine">Выгоднее в комплексе</span>
                   ) : (
                     item.hint && <span className="text-[10px] text-gray-400 block leading-tight">{item.hint}</span>
                   )}
