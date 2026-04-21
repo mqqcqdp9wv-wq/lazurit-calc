@@ -78,16 +78,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                   <span className="text-sm font-medium text-gray-800 block">
                     {item.title}
                     {COMPLEX_ITEM_IDS.has(item.id) && (
-                      <span className="relative group/tip inline-block ml-1 align-top cursor-help">
-                        <span className="text-amber-400 text-[10px]">✦</span>
-                        <span className={`
-                          absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 rounded bg-gray-800 text-white text-[10px] whitespace-nowrap transition-opacity pointer-events-none z-30
-                          group-hover/tip:opacity-100
-                          ${activeHint === item.id ? 'opacity-100' : 'opacity-0'}
-                        `}>
-                          Выгоднее в комплексе
-                        </span>
-                      </span>
+                      <span className="text-amber-400 text-[10px] ml-1 align-top">✦</span>
                     )}
                   </span>
                   {activeHint === item.id && COMPLEX_ITEM_IDS.has(item.id) ? (
