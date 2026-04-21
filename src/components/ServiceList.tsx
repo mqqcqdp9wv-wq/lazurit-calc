@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useRef, useEffect } from 'react'
 import { Zone, ServiceItem, formatPrice, COMPLEX_ITEM_IDS } from '@/data/services'
 
 type ServiceListProps = {
@@ -11,6 +12,22 @@ type ServiceListProps = {
 }
 
 export default function ServiceList({ zone, selectedIds, priceMultiplier, gender, onToggle }: ServiceListProps) {
+  const [activeHint, setActiveHint] = useState<number | null>(null)
+  const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => () => {
+    if (hintTimerRef.current) clearTimeout(hintTimerRef.current)
+  }, [])
+
+  const handleToggle = (zoneKey: string, item: ServiceItem) => {
+    if (COMPLEX_ITEM_IDS.has(item.id)) {
+      if (hintTimerRef.current) clearTimeout(hintTimerRef.current)
+      setActiveHint(item.id)
+      hintTimerRef.current = setTimeout(() => setActiveHint(null), 2000)
+    }
+    onToggle(zoneKey, item.id)
+  }
+
   return (
     <div className="card overflow-hidden animate-in">
       <div className="px-5 pt-4 pb-3 border-b border-gray-100">
@@ -32,7 +49,7 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                 </div>
               )}
               <div
-                onClick={() => onToggle(zone.key, item.id)}
+                onClick={() => handleToggle(zone.key, item)}
                 className={`
                   flex items-center gap-2 px-4 py-3 cursor-pointer
                   transition-colors duration-300
@@ -63,13 +80,21 @@ export default function ServiceList({ zone, selectedIds, priceMultiplier, gender
                     {COMPLEX_ITEM_IDS.has(item.id) && (
                       <span className="relative group/tip inline-block ml-1 align-top cursor-help">
                         <span className="text-amber-400 text-[10px]">✦</span>
-                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 rounded bg-gray-800 text-white text-[10px] whitespace-nowrap opacity-0 group-hover/tip:opacity-100 transition-opacity pointer-events-none z-30">
+                        <span className={`
+                          absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1 rounded bg-gray-800 text-white text-[10px] whitespace-nowrap transition-opacity pointer-events-none z-30
+                          group-hover/tip:opacity-100
+                          ${activeHint === item.id ? 'opacity-100' : 'opacity-0'}
+                        `}>
                           Выгоднее в комплексе
                         </span>
                       </span>
                     )}
                   </span>
-                  {item.hint && <span className="text-[10px] text-gray-400 block leading-tight">{item.hint}</span>}
+                  {activeHint === item.id && COMPLEX_ITEM_IDS.has(item.id) ? (
+                    <span className="text-[10px] text-amber-600 block leading-tight animate-fade-up">✦ Выгоднее в комплексе</span>
+                  ) : (
+                    item.hint && <span className="text-[10px] text-gray-400 block leading-tight">{item.hint}</span>
+                  )}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-cyan-600 whitespace-nowrap">
                   {formatPrice(price)}
