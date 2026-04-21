@@ -277,7 +277,7 @@ export default function Calculator() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-[100dvh] bg-gray-50">
       {/* Feedback banner */}
       <div className="bg-gray-100 border-b border-gray-200 text-center py-1.5 px-4">
         <span className="text-xs text-gray-500">

@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className="min-h-screen font-sans">
+      <body className="min-h-[100dvh] font-sans overscroll-none">
         {children}
         <Script id="yandex-metrika" strategy="afterInteractive">{`
           (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
