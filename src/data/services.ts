@@ -105,7 +105,7 @@ export const COMPLEXES: ComplexOffer[] = [
     id: 'ruki-podmyshki',
     title: 'Руки полностью + подмышки',
     requiredItemIds: [21, 5], // Руки полностью + Подмышки
-    price: 13475,
+    price: 5390,
     price5: 13475,
   },
   {
