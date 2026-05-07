@@ -23,9 +23,15 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_FORM_ENDPOINT: https://script.google.com/macros/s/AKfycbwe6bYJfqM4yN2_UuxnF764m1cv8h3i0RC17CGuFaLsDfB1TGwUBbd0YSlDhY9GsP8n/exec
+          # FORM_TOKEN задать в Settings → Secrets and variables → Actions → New repository secret.
+          # Должен совпадать с SHARED_SECRET в Apps Script Script Properties.
+          NEXT_PUBLIC_FORM_TOKEN: ${{ secrets.FORM_TOKEN }}
 
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+        # v4.0.0 — pinned to commit SHA, чтобы compromised maintainer не мог
+        # перенацелить мутабельный тег v4 на вредоносную версию.
+        # Обновлять SHA вручную при выходе новой версии.
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out

@@ -1,0 +1,13 @@
+# gitleaks ignore list для lazurit-calc-next.
+# Формат: <commit-sha>:<path>:<rule-id>:<line> или просто fingerprint.
+#
+# Сюда — ТОЛЬКО исторические находки, которые уже невозможно вычистить
+# без переписывания git-истории (filter-repo + force push). НЕ добавлять
+# сюда новые «временные» исключения — это инвалидирует весь смысл хука.
+#
+# 2026-05-08: исторический YUKASSA_SECRET в коммите a9f0b2d.
+# Ключ ротирован в YooKassa, новый ключ лежит в Apps Script PropertiesService.
+# История пока не переписана (риски force-push на публичной main-ветке).
+# При появлении окна на rewrite — `git filter-repo --path google-apps-script.js
+# --invert-paths --force` и удалить эту строку.
+a9f0b2d815db7dd0704a9a36db5ea43227b3ee24:google-apps-script.js:generic-api-key:9

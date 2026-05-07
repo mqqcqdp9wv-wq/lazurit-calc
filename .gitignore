@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# deepsec workspace (локальный security-аудит, не деплоить)
+.deepsec/
+
+# локальные бэкапы заявок
+lazurit-zayavki.xlsx

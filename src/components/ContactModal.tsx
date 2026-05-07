@@ -92,12 +92,14 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
     if (isPayment) {
       // Payment mode: create payment via JSONP then redirect
       const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT
-      if (!endpoint) { setSending(false); return }
+      const token = process.env.NEXT_PUBLIC_FORM_TOKEN
+      if (!endpoint || !token) { setSending(false); return }
 
       // Create payment via JSONP (saves to Sheets + sends email inside handlePaymentJsonp)
       const callbackName = '_yukassa_cb_' + Date.now()
       const params = new URLSearchParams({
         action: 'payment',
+        token,
         amount: String(paymentAmount),
         services,
         sessions: String(sessions),
@@ -142,11 +144,13 @@ export default function ContactModal({ isOpen, onClose, orderLines, totalPrice, 
     } else {
       // Form mode: submit via JSONP (same pattern as payments — fetch POST loses body on redirect)
       const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT
-      if (!endpoint) { setSending(false); return }
+      const token = process.env.NEXT_PUBLIC_FORM_TOKEN
+      if (!endpoint || !token) { setSending(false); return }
 
       const callbackName = '_form_cb_' + Date.now()
       const params = new URLSearchParams({
         action: 'form',
+        token,
         name: name.trim(),
         phone: fullPhone,
         telegram: telegram.trim(),

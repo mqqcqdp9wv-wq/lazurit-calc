@@ -1,0 +1,13 @@
+# Pre-commit hooks для lazurit-calc-next.
+# Установка локально: pre-commit install
+# Запуск вручную: pre-commit run --all-files
+#
+# gitleaks — сканирует staged diff на признаки секретов (API ключи,
+# токены, приватные ключи). Без этого хука 2026-05-08 в репо уехал
+# YOOKASSA_SECRET. Не отключать.
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
